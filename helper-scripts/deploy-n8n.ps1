@@ -26,17 +26,12 @@ if (-not $repoRoot) {
 
 $localDir = Join-Path $repoRoot "services\n8n"
 $composeFile = Join-Path $localDir "docker-compose.yml"
-$caddyFile = Join-Path $localDir "Caddyfile"
 $envExampleFile = Join-Path $localDir ".env.example"
 $envFile = Join-Path $localDir ".env"
 $localFilesDir = Join-Path $localDir "local-files"
 
 if (-not (Test-Path $composeFile)) {
     throw "Missing compose file: $composeFile"
-}
-
-if (-not (Test-Path $caddyFile)) {
-    throw "Missing Caddyfile: $caddyFile"
 }
 
 if (-not (Test-Path $envExampleFile)) {
@@ -53,7 +48,6 @@ if (-not (Test-Path $localFilesDir)) {
 
 ssh $RemoteAlias "mkdir -p '$RemoteDir'"
 scp $composeFile ("{0}:{1}/docker-compose.yml" -f $RemoteAlias, $RemoteDir)
-scp $caddyFile ("{0}:{1}/Caddyfile" -f $RemoteAlias, $RemoteDir)
 scp $envFile ("{0}:{1}/.env" -f $RemoteAlias, $RemoteDir)
 if ($Update) {
     Write-Host "Updating n8n image before restart..."

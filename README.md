@@ -7,7 +7,7 @@ Praktische Doku und Arbeitsgrundlage für KI-gestützte Coding-Workflows mit ein
 - [agents.example.md](agents.example.md) - Beispiel für Leitlinien für zukünftige KI-Tools, die dieses Repo bedienen
 - [docs/how-to/setup-ssh-key-windows.md](docs/how-to/setup-ssh-key-windows.md) - SSH-Key unter Windows einrichten
 - [docs/how-to/setup-debian-linux-server-for-codex.md](docs/how-to/setup-debian-linux-server-for-codex.md) - Debian-Server für den `codex`-Login und Docker vorbereiten
-- [docs/how-to/setup-n8n-lan.md](docs/how-to/setup-n8n-lan.md) - n8n im lokalen Netzwerk per Docker bereitstellen
+- [docs/how-to/setup-n8n-lan.md](docs/how-to/setup-n8n-lan.md) - n8n per Docker hinter dem nginx-proxy-manager bereitstellen
 - [docs/how-to/setup-n8n-mcp-codex-windows.md](docs/how-to/setup-n8n-mcp-codex-windows.md) - n8n-MCP in Codex unter Windows einrichten
 - [docs/how-to/setup-context7-codex-windows.md](docs/how-to/setup-context7-codex-windows.md) - Context7 in Codex unter Windows einrichten
 - [docs/how-to/setup-strato-dyndns-fritzbox.md](docs/how-to/setup-strato-dyndns-fritzbox.md) - STRATO DynDNS mit der Fritzbox einrichten
@@ -21,6 +21,7 @@ Praktische Doku und Arbeitsgrundlage für KI-gestützte Coding-Workflows mit ein
 - Docker-Container und Compose-Dateien werden auf dem Server verwaltet.
 - Der SSH-Alias `codex-home` vereinfacht die Verbindung vom Windows-Rechner.
 - n8n wird als Docker-Container unter `services/n8n` konfiguriert und per `helper-scripts/deploy-n8n.ps1` in das Home-Verzeichnis von `codex` auf dem Server ausgerollt. Mit `-Update` zieht das Skript vor dem Neustart die aktuelle `n8n:stable`-Version.
+- Den HTTPS-Zugriff auf n8n übernimmt der nginx-proxy-manager des Servers; n8n selbst hängt ohne eigenen Port in dessen Docker-Netz.
 
 ## Für den Start
 
