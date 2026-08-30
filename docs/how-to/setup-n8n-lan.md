@@ -35,7 +35,7 @@ Kopiere die Vorlage vor dem Start nach `services/n8n/.env` und trage dort deine 
 Relevant sind vor allem:
 
 - `N8N_DOMAIN`
-- `N8N_EDITOR_BASE_URL` und `WEBHOOK_URL`
+- `N8N_EDITOR_BASE_URL` und `N8N_WEBHOOK_URL`
 - `PROXY_NETWORK`
 
 Bei einer anderen Subdomain werden diese Werte, der DNS-Eintrag und der Proxy-Host im nginx-proxy-manager angepasst.
@@ -119,10 +119,10 @@ Nach Änderungen an der Compose-Datei oder der `.env` das Deploy-Skript erneut a
 
 Der Stack veröffentlicht selbst keinen Port mehr. Für Webhooks von außen (etwa Telegram) bedient der nginx-proxy-manager einen zweiten Port: In seinem Compose kommt neben `443:443` das Mapping `8443:443` dazu, im Router zeigt die Freigabe für 8443 auf den Server. Telegram akzeptiert nur die Ports 443, 80, 88 und 8443.
 
-Damit n8n seine Webhook-Adressen mit diesem Port bildet, steht in der `.env`:
+Damit n8n seine Webhook-Adressen mit diesem Port bildet, steht in der `.env` (bis n8n 2.35 hieß die Variable `WEBHOOK_URL`):
 
 ```text
-WEBHOOK_URL=https://n8n.example.tld:8443/
+N8N_WEBHOOK_URL=https://n8n.example.tld:8443/
 ```
 
-Zusammen mit den beiden Custom Locations ist von außen nur `/webhook` und `/webhook-test` erreichbar; jeder andere Pfad läuft über 8443 in die Access-List und wird abgewiesen. Nach einer Änderung an `WEBHOOK_URL` müssen aktive Workflows einmal neu aktiviert werden, damit die Adresse beim Dienst neu registriert wird – ein Neustart des Containers erledigt das.
+Zusammen mit den beiden Custom Locations ist von außen nur `/webhook` und `/webhook-test` erreichbar; jeder andere Pfad läuft über 8443 in die Access-List und wird abgewiesen. Nach einer Änderung an `N8N_WEBHOOK_URL` müssen aktive Workflows einmal neu aktiviert werden, damit die Adresse beim Dienst neu registriert wird – ein Neustart des Containers erledigt das.
