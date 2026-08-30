@@ -84,6 +84,8 @@ In der Oberfläche des Proxys unter „Proxy Hosts“ einen Host anlegen:
 - Access List: `intern only`, solange nur der Zugriff aus dem eigenen Netz gewünscht ist
 - SSL: „Request a new Certificate“ mit Let's Encrypt, dazu Force SSL und HTTP/2
 
+Sollen Webhooks von außen ankommen, kommen unter „Custom Locations“ zwei Einträge dazu: `/webhook` und `/webhook-test`, jeweils auf `n8n:5678`, im Feld „Advanced“ mit `allow all;`. Diese Zeile steht in der erzeugten Konfiguration vor den Regeln der Access-List und hebt sie damit für genau diese Pfade auf.
+
 ## 6. Browserzugriff
 
 ```text
@@ -115,4 +117,12 @@ Nach Änderungen an der Compose-Datei oder der `.env` das Deploy-Skript erneut a
 
 ## 11. Externe Webhooks
 
-Der Stack veröffentlicht selbst keinen Port mehr. Sollen Webhooks von außen erreichbar sein (etwa für Telegram), muss der nginx-proxy-manager diesen Zugang bereitstellen und die Freigabe im Router darauf zeigen.
+Der Stack veröffentlicht selbst keinen Port mehr. Für Webhooks von außen (etwa Telegram) bedient der nginx-proxy-manager einen zweiten Port: In seinem Compose kommt neben `443:443` das Mapping `8443:443` dazu, im Router zeigt die Freigabe für 8443 auf den Server. Telegram akzeptiert nur die Ports 443, 80, 88 und 8443.
+
+Damit n8n seine Webhook-Adressen mit diesem Port bildet, steht in der `.env`:
+
+```text
+WEBHOOK_URL=https://n8n.example.tld:8443/
+```
+
+Zusammen mit den beiden Custom Locations ist von außen nur `/webhook` und `/webhook-test` erreichbar; jeder andere Pfad läuft über 8443 in die Access-List und wird abgewiesen. Nach einer Änderung an `WEBHOOK_URL` müssen aktive Workflows einmal neu aktiviert werden, damit die Adresse beim Dienst neu registriert wird – ein Neustart des Containers erledigt das.
