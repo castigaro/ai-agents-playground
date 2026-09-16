@@ -1,0 +1,31 @@
+services:
+  runner:
+    build: .
+    image: github-runner-spacesonar:local
+    container_name: github-runner-spacesonar
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ:-Europe/Berlin}
+      - RUN_AS_ROOT=true
+      - RUNNER_SCOPE=repo
+      - REPO_URL=${REPO_URL:-https://github.com/castigaro/spacesonar-pro}
+      - RUNNER_NAME=${RUNNER_NAME:-homeserver}
+      - LABELS=${LABELS:-spacesonar}
+      - RUNNER_WORKDIR=/_work
+      - RUNNER_TOKEN=${RUNNER_TOKEN:-}
+      - ACCESS_TOKEN=${ACCESS_TOKEN:-}
+      # The registration survives restarts in its own volume, so the token is needed once.
+      - CONFIGURED_ACTIONS_RUNNER_FILES_DIR=/runner-config
+      - DISABLE_AUTOMATIC_DEREGISTRATION=true
+      - CARGO_BUILD_JOBS=${CARGO_BUILD_JOBS:-4}
+    volumes:
+      - runner_config:/runner-config
+      - runner_home:/root
+      - runner_work:/_work
+      - runner_tools:/opt/hostedtoolcache
+
+volumes:
+  runner_config:
+  runner_home:
+  runner_work:
+  runner_tools:

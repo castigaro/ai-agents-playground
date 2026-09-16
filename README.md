@@ -13,6 +13,8 @@ Praktische Doku und Arbeitsgrundlage für KI-gestützte Coding-Workflows mit ein
 - [docs/how-to/setup-strato-dyndns-fritzbox.md](docs/how-to/setup-strato-dyndns-fritzbox.md) - STRATO DynDNS mit der Fritzbox einrichten
 - [docs/how-to/setup-pihole-local-dns.md](docs/how-to/setup-pihole-local-dns.md) - Pi-hole lokale DNS-Einträge pflegen
 - [docs/how-to/setup-edge-devtools-mcp.md](docs/how-to/setup-edge-devtools-mcp.md) - Edge als DevTools-Ziel für lokale Webseiten nutzen
+- [docs/how-to/setup-github-runner-debian.md](docs/how-to/setup-github-runner-debian.md) - GitHub-Actions-Runner für spacesonar-pro als Docker-Container auf dem Server
+- [docs/how-to/setup-github-runner-windows.md](docs/how-to/setup-github-runner-windows.md) - GitHub-Actions-Runner für spacesonar-pro auf dem Windows-Arbeitsrechner
 
 ## Kurzüberblick
 
@@ -22,6 +24,7 @@ Praktische Doku und Arbeitsgrundlage für KI-gestützte Coding-Workflows mit ein
 - Der SSH-Alias `codex-home` vereinfacht die Verbindung vom Windows-Rechner.
 - n8n wird als Docker-Container unter `services/n8n` konfiguriert und per `helper-scripts/deploy-n8n.ps1` in das Home-Verzeichnis von `codex` auf dem Server ausgerollt. Mit `-Update` zieht das Skript vor dem Neustart die aktuelle `n8n:stable`-Version.
 - Den HTTPS-Zugriff auf n8n übernimmt der nginx-proxy-manager des Servers; n8n selbst hängt ohne eigenen Port in dessen Docker-Netz.
+- Die CI von `spacesonar-pro` läuft auf eigenen Runnern: der Linux-Job als Container unter `services/github-runner` auf dem Server (Deploy per `helper-scripts/deploy-github-runner.ps1`), Windows-Job und Release auf dem Arbeitsrechner (`helper-scripts/setup-github-runner-windows.ps1`).
 
 ## Für den Start
 
