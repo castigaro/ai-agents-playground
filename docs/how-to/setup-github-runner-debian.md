@@ -48,7 +48,7 @@ Vom Windows-Rechner aus im Projektroot:
 .\helper-scripts\deploy-github-runner.ps1
 ```
 
-Das Skript kopiert Compose-Datei, Dockerfile, Entrypoint und `.env` auf den Server, baut das Image dort und startet den Stack mit `docker compose up -d --build`. Mit `-Update` zieht es vorher das Upstream-Image neu (`docker compose build --pull`). Fehlt die `.env`, legt es sie aus der Vorlage an und bricht ab, bis das Token drinsteht.
+Das Skript kopiert Compose-Datei, Dockerfile, Entrypoint und `.env` auf den Server, baut das Image dort und startet den Stack mit `docker compose up -d --build`. Mit `-Update` zieht es vorher das Upstream-Image neu (`docker compose build --pull`). Fehlt die `.env`, legt es sie aus der Vorlage an und bricht ab, bis das Token drinsteht. Blockt die Ausführungsrichtlinie das Skript: `pwsh -ExecutionPolicy Bypass -File .\helper-scripts\deploy-github-runner.ps1` oder einmal `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## 3. Zielpfad auf dem Server
 

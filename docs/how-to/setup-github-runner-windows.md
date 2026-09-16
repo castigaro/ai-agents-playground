@@ -26,6 +26,8 @@ In einer PowerShell (7, nicht erhöht) im Projektroot:
 .\helper-scripts\setup-github-runner-windows.ps1
 ```
 
+Meldet PowerShell „Die Ausführung von Skripts ist auf diesem System deaktiviert", entweder einmalig `pwsh -ExecutionPolicy Bypass -File .\helper-scripts\setup-github-runner-windows.ps1` oder dauerhaft für den Benutzer `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` (gilt dann auch für die anderen Skripte unter `helper-scripts/`).
+
 Das Skript
 
 - prüft, dass die Werkzeuge auf dem PATH sind,
